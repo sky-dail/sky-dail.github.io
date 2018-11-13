@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="TLS,PKI,">
+  <meta name="keywords" content="PKI,">
 
 
 
@@ -79,26 +79,18 @@
 
 
 
-<meta name="description" content="第一阶段 ClientHello    Version 客户端支持的最大版本号，当前为TLSv1.2 Random 客户端生成的随机数（32字节其中前四字节为时间，后28字节为随机数） Session Id  会话id  Cipher suite (客户端支持的加密套件)：共17个，组成（密钥交换，加密算法，Mac算法，prf伪随机函数） Compression Methods(压缩方法)：一般">
-<meta name="keywords" content="TLS,PKI">
+<meta name="description" content="Certificate ::= SEQUENCE { tbsCertificate       TBSCertificate, -- 证书主体  signatureAlgorithm   AlgorithmIdentifier, -- 证书签名算法标识  signatureValue       BIT STRING --证书签名值,是使用signatureAlgorithm部分指定的签名算法对t">
+<meta name="keywords" content="PKI">
 <meta property="og:type" content="article">
-<meta property="og:title" content="TLS握手协议">
-<meta property="og:url" content="http://yoursite.com/2018/11/11/TLS握手协议/index.html">
+<meta property="og:title" content="证书结构解析">
+<meta property="og:url" content="http://yoursite.com/2018/11/13/证书结构解析/index.html">
 <meta property="og:site_name" content="sky">
-<meta property="og:description" content="第一阶段 ClientHello    Version 客户端支持的最大版本号，当前为TLSv1.2 Random 客户端生成的随机数（32字节其中前四字节为时间，后28字节为随机数） Session Id  会话id  Cipher suite (客户端支持的加密套件)：共17个，组成（密钥交换，加密算法，Mac算法，prf伪随机函数） Compression Methods(压缩方法)：一般">
+<meta property="og:description" content="Certificate ::= SEQUENCE { tbsCertificate       TBSCertificate, -- 证书主体  signatureAlgorithm   AlgorithmIdentifier, -- 证书签名算法标识  signatureValue       BIT STRING --证书签名值,是使用signatureAlgorithm部分指定的签名算法对t">
 <meta property="og:locale" content="zh_Hans">
-<meta property="og:image" content="http://yoursite.com/2018/11/11/TLS握手协议/ClientHello.png">
-<meta property="og:image" content="http://yoursite.com/2018/11/11/TLS握手协议/ClientHello2.png">
-<meta property="og:image" content="http://yoursite.com/2018/11/11/TLS握手协议/ServerHello1.png">
-<meta property="og:image" content="http://yoursite.com/2018/11/11/TLS握手协议/ServerHello2.png">
-<meta property="og:image" content="http://yoursite.com/2018/11/11/TLS握手协议/ServerHello3.png">
-<meta property="og:image" content="http://yoursite.com/2018/11/11/TLS握手协议/ServerHello4.png">
-<meta property="og:image" content="http://yoursite.com/2018/11/11/TLS握手协议/cert_verify.png">
-<meta property="og:updated_time" content="2018-11-13T13:02:03.848Z">
+<meta property="og:updated_time" content="2018-11-13T13:02:03.849Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="TLS握手协议">
-<meta name="twitter:description" content="第一阶段 ClientHello    Version 客户端支持的最大版本号，当前为TLSv1.2 Random 客户端生成的随机数（32字节其中前四字节为时间，后28字节为随机数） Session Id  会话id  Cipher suite (客户端支持的加密套件)：共17个，组成（密钥交换，加密算法，Mac算法，prf伪随机函数） Compression Methods(压缩方法)：一般">
-<meta name="twitter:image" content="http://yoursite.com/2018/11/11/TLS握手协议/ClientHello.png">
+<meta name="twitter:title" content="证书结构解析">
+<meta name="twitter:description" content="Certificate ::= SEQUENCE { tbsCertificate       TBSCertificate, -- 证书主体  signatureAlgorithm   AlgorithmIdentifier, -- 证书签名算法标识  signatureValue       BIT STRING --证书签名值,是使用signatureAlgorithm部分指定的签名算法对t">
 
 
 
@@ -128,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/11/11/TLS握手协议/">
+  <link rel="canonical" href="http://yoursite.com/2018/11/13/证书结构解析/">
 
 
 
 
 
-  <title>TLS握手协议 | sky</title>
+  <title>证书结构解析 | sky</title>
   
 
 
@@ -241,7 +233,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/11/TLS握手协议/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/13/证书结构解析/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="dail sky">
@@ -258,7 +250,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">TLS握手协议</h1>
+          <h1 class="post-title" itemprop="name headline">证书结构解析</h1>
         
 
         <div class="post-meta">
@@ -270,8 +262,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-11T08:54:16+08:00">
-                2018-11-11
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-13T20:48:22+08:00">
+                2018-11-13
               </time>
             
 
@@ -308,97 +300,161 @@
       
 
       
-        <ul>
-<li><p>第一阶段 ClientHello</p>
-<p><img src="/2018/11/11/TLS握手协议/ClientHello.png" alt="ClientHello"></p>
-<p><img src="/2018/11/11/TLS握手协议/ClientHello2.png" alt="ClientHello2"></p>
-<ul>
-<li>Version 客户端支持的最大版本号，当前为TLSv1.2</li>
-<li>Random 客户端生成的随机数（32字节其中前四字节为时间，后28字节为随机数）</li>
-<li>Session Id  会话id </li>
-<li>Cipher suite (客户端支持的加密套件)：共17个，组成（密钥交换，加密算法，Mac算法，prf伪随机函数）</li>
-<li>Compression Methods(压缩方法)：一般为null（0）</li>
-<li>Extension : 扩展项</li>
-</ul>
-</li>
-<li><p>第二阶段  ServerHello</p>
-<p><img src="/2018/11/11/TLS握手协议/ServerHello1.png" alt="ServerHello1"></p>
-<p><img src="/2018/11/11/TLS握手协议/ServerHello2.png" alt="ServerHello2"></p>
-<p><img src="/2018/11/11/TLS握手协议/ServerHello3.png" alt="ServerHello3"></p>
-<p><img src="/2018/11/11/TLS握手协议/ServerHello4.png" alt="ServerHello4"></p>
-<ul>
-<li><p>Server hello </p>
-<ul>
-<li>Version 确定版本号TLS1.2</li>
-<li>Random 服务端自生成的随机数（32字节 4+28）</li>
-<li>Session Id 用于以后会话恢复使用的</li>
-<li>Cipher suite 选用加密套件</li>
-<li>Compression Method 压缩算法（null）</li>
-<li>Extensions 扩展项</li>
-</ul>
-</li>
-<li><p>Certificate </p>
-<ul>
-<li>服务端的证书以及签发CA的证书。通过签发CA的证书信息，能够直接找到根证书 </li>
-</ul>
-</li>
-<li><p>Server Key Exchange</p>
-<ul>
-<li>如果密钥交换算法是DH算法，这里需要发送服务端使用的DH参数，RSA算法不需要这一步</li>
-</ul>
-</li>
-<li><p>Certificate Request(Optional)</p>
-<ul>
-<li>如果服务端想验证客户端证书的话，发出该请求，在Certificate_Verify客户端会发送证书给服务端</li>
-<li>客户端可以提供的证书类型</li>
-<li>服务端接收的证书distinguished name 列表，可以是root CA或者 subordinate CA。如果服务端配置了trust keystore,这里会列出所有的trust keystore 中的distinguished name</li>
-</ul>
-</li>
-<li><p>server hello done</p>
-<ul>
-<li>server hello 结束</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>第三步 Certificate_verify</p>
-<p><img src="/2018/11/11/TLS握手协议/cert_verify.png" alt="cert_verify"></p>
-<ul>
-<li>certificate_ verify <ul>
-<li>验证服务端证书的合法性，解析出服务端证书公钥</li>
-</ul>
-</li>
-<li>certificate<ul>
-<li>客户端证书（可选）仅在双向认证时有这步</li>
-</ul>
-</li>
-<li>client key exchange<ul>
-<li>客户端生成的第三个随机数。如果采用的是RSA算法，会生成一个48字节随机数，然后用server的公钥加密后再放入报文中；如果是DH算法，这里发送的就是客户端的DH算法，之后服务端和客户端根据DH算法，各自计算出相同的pre-master secret</li>
-</ul>
-</li>
-<li><p>change cipher spec </p>
-<ul>
-<li>客户端使用上面的随机数client random,server random, premaster secret 计算出48字节的master secret 这个就是对称加密算法的密钥</li>
-<li>发送change cipher spec 后告知服务端，客户端已经切换好加密套件，随时可以传输数据</li>
-</ul>
-</li>
-<li><p>finished</p>
-<ul>
-<li>客户端发送第一个加密报文，使用HMAC算法计算收到和发送的所有握手消息的摘要，然后通过RFC5246中定义的一个伪随机函数PRF计算出结果，加密后发送。</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>第四步server finish<br>和第三步操作大致相同</p>
-</li>
-<li>session的恢复<ul>
-<li>握手阶段用来建立SSL的连接。如果处于某种原因，对话中断，就需要重新握手。</li>
-<li>有两种方法可以恢复原来的session：一种叫做session ID，另一种叫做session ticket</li>
-<li>session ID的思想很简单，就是每一次对话就有一个编号。如果对话中断，下次重连的时候，只要客户端给出这个编号，且服务端有这个编号的记录，双方就可以重新使用已有的“对话密钥”，而不必重新生成一把。</li>
-</ul>
-</li>
-</ul>
+        <p>Certificate ::= SEQUENCE {</p>
+<pre><code>tbsCertificate       TBSCertificate, -- 证书主体
 
+signatureAlgorithm   AlgorithmIdentifier, -- 证书签名算法标识
+
+signatureValue       BIT STRING --证书签名值,是使用signatureAlgorithm部分指定的签名算法对tbsCertificate证书主题部分签名后的值.
+
+ }
+</code></pre><p>   TBSCertificate ::= SEQUENCE {</p>
+<pre><code>version         [0] EXPLICIT Version DEFAULT v1, -- 证书版本号
+
+serialNumber         CertificateSerialNumber, -- 证书序列号，对同一CA所颁发的证书，序列号唯一标识证书
+
+signature            AlgorithmIdentifier, --证书签名算法标识
+
+issuer               Name,                --证书发行者名称
+
+validity             Validity,            --证书有效期
+
+subject              Name,                --证书主体名称
+
+subjectPublicKeyInfo SubjectPublicKeyInfo,--证书公钥
+
+issuerUniqueID [1] IMPLICIT UniqueIdentifier OPTIONAL,
+
+                     -- 证书发行者ID(可选)，只在证书版本2、3中才有
+
+subjectUniqueID [2] IMPLICIT UniqueIdentifier OPTIONAL,
+
+                     -- 证书主体ID(可选)，只在证书版本2、3中才有
+
+extensions      [3] EXPLICIT Extensions OPTIONAL
+
+                     -- 证书扩展段（可选），只在证书版本3中才有
+
+}
+</code></pre><p>   Version ::= INTEGER { v1(0), v2(1), v3(2) }</p>
+<p>   CertificateSerialNumber ::= INTEGER</p>
+<p>   AlgorithmIdentifier ::= SEQUENCE {</p>
+<pre><code>algorithm               OBJECT IDENTIFIER,
+
+parameters              ANY DEFINED BY algorithm OPTIONAL }
+</code></pre><p>   parameters:</p>
+<p>   Dss-Parms ::= SEQUENCE { – parameters ，DSA(DSS)算法时的parameters,</p>
+<p>RSA算法没有此参数</p>
+<pre><code>p             INTEGER,
+
+q             INTEGER,
+
+g             INTEGER }
+</code></pre><p>signatureValue：</p>
+<p>Dss-Sig-Value ::= SEQUENCE { – sha1DSA签名算法时,签名值</p>
+<pre><code>r       INTEGER,
+
+s       INTEGER }
+</code></pre><p>   Name ::= CHOICE {</p>
+<pre><code>RDNSequence }
+</code></pre><p>   RDNSequence ::= SEQUENCE OF RelativeDistinguishedName</p>
+<p>   RelativeDistinguishedName ::=</p>
+<pre><code>SET OF AttributeTypeAndValue
+</code></pre><p>   AttributeTypeAndValue ::= SEQUENCE {</p>
+<pre><code>type     AttributeType,
+
+value    AttributeValue }
+</code></pre><p>   AttributeType ::= OBJECT IDENTIFIER</p>
+<p>   AttributeValue ::= ANY DEFINED BY AttributeType</p>
+<p>   Validity ::= SEQUENCE {</p>
+<pre><code>notBefore      Time,  -- 证书有效期起始时间
+
+notAfter       Time  -- 证书有效期终止时间
+
+}
+</code></pre><p>   Time ::= CHOICE {</p>
+<pre><code>utcTime        UTCTime,
+
+generalTime    GeneralizedTime }
+</code></pre><p>   UniqueIdentifier ::= BIT STRING</p>
+<p>   SubjectPublicKeyInfo ::= SEQUENCE {</p>
+<pre><code>algorithm            AlgorithmIdentifier, -- 公钥算法
+
+subjectPublicKey     BIT STRING            -- 公钥值
+
+}
+</code></pre><p>subjectPublicKey:</p>
+<p>RSAPublicKey ::= SEQUENCE { – RSA算法时的公钥值</p>
+<pre><code>modulus            INTEGER, -- n
+
+publicExponent     INTEGER -- e -- }
+</code></pre><p>   Extensions ::= SEQUENCE SIZE (1..MAX) OF Extension</p>
+<p>   Extension ::= SEQUENCE {</p>
+<pre><code>extnID      OBJECT IDENTIFIER,
+
+critical    BOOLEAN DEFAULT FALSE,
+
+extnValue   OCTET STRING }
+</code></pre><p>PKCS#10</p>
+<pre><code>CertificationRequestInfo ::= SEQUENCE {
+    version       INTEGER { v1(0) } (v1,...),
+    subject       Name,
+    subjectPKInfo SubjectPublicKeyInfo{{ PKInfoAlgorithms }},
+    attributes    [0] Attributes{{ CRIAttributes }}
+}
+
+SubjectPublicKeyInfo { ALGORITHM : IOSet} ::= SEQUENCE {
+    algorithm        AlgorithmIdentifier {{IOSet}},
+    subjectPublicKey BIT STRING
+}
+
+CertificationRequest ::= SEQUENCE {
+    certificationRequestInfo CertificationRequestInfo,
+    signatureAlgorithm AlgorithmIdentifier{{ SignatureAlgorithms }},
+    signature          BIT STRING
+} 
+</code></pre><p>PKCS#8 </p>
+<pre><code>PrivateKeyInfo ::= SEQUENCE {
+    version                   Version, 版本 缺省为0
+    privateKeyAlgorithm       PrivateKeyAlgorithmIdentifier, 私钥算法标识
+    privateKey                PrivateKey,  私钥明文
+    attributes           [0]  IMPLICIT Attributes OPTIONAL  和私钥一起被加密的属性集合
+}
+EncryptedPrivateKeyInfo ::= SEQUENCE {
+    encryptionAlgorithm  EncryptionAlgorithmIdentifier,
+    encryptedData        EncryptedData
+}
+</code></pre><p>PKCS#7– 数字签名</p>
+<pre><code>SignedData ::= SEQUENCE {    数字签名
+    version Version,      消息格式版本   缺省值为1
+    digestAlgorithms DigestAlgorithmIdentifiers,    摘要算法标识集合
+    contentInfo ContentInfo, 待签名内容
+    certificates  [0] IMPLICIT ExtendedCertificatesAndCertificates  OPTIONAL,  签名者认证路径中的相关证书
+    crls   [1] IMPLICIT CertificateRevocationLists OPTIONAL,   CRL集合
+    signerInfos SignerInfos    签名者信息集合（至少包含一个签名者）
+}
+SignerInfo ::= SEQUENCE {     签名者信息格式
+    version Version,   消息格式版本  缺省值为1
+    issuerAndSerialNumber IssuerAndSerialNumber,   用于唯一确定签名者证书，由证书签发者DN和证书序列号组成
+    digestAlgorithm DigestAlgorithmIdentifier,  摘要算法标识，得属于signeddata 中的digestAlgs
+    authenticatedAttributes [0] IMPLICIT Attributes OPTIONAL,标识签名者用于签名的属性集合
+    digestEncryptionAlgorithm  DigestEncryptionAlgorithmIdentifier, 用签名者私钥对摘要加密或对签名的公钥算法进行标识
+    encryptedDigest EncryptedDigest,私钥对摘要进行加密或签名后的值
+    unauthenticatedAttributes  [1] IMPLICIT Attributes OPTIONAL 表示签名者未用于签名的属性集合   
+}
+</code></pre><p> PKCS#7– 数字信封</p>
+<pre><code>EnvelopedData ::= SEQUENCE {   数字信封
+    version Version,  消息格式版本  缺省值0
+    recipientInfos RecipientInfos,    接收者集合至少含有一个接收者
+    encryptedContentInfo EncryptedContentInfo 已加密的内容信息
+}
+RecipientInfo ::= SEQUENCE {
+    version Version, 消息格式版本  缺省值为0
+    issuerAndSerialNumber IssuerAndSerialNumber,   用于唯一确定接收者证书，其证书签发者DN和证书序列号组成
+    keyEncryptionAlgorithm  KeyEncryptionAlgorithmIdentifier, 密码算法标识，用于加密密钥
+    encryptedKey EncryptedKey   被加密的密钥
+}
+</code></pre>
       
     </div>
     
@@ -415,8 +471,6 @@
       
         <div class="post-tags">
           
-            <a href="/tags/TLS/" rel="tag"># TLS</a>
-          
             <a href="/tags/PKI/" rel="tag"># PKI</a>
           
         </div>
@@ -430,15 +484,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2018/11/11/TLS握手协议/" rel="next" title="TLS握手协议">
+                <i class="fa fa-chevron-left"></i> TLS握手协议
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/11/13/证书结构解析/" rel="prev" title="证书结构解析">
-                证书结构解析 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>

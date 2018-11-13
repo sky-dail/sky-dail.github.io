@@ -233,6 +233,279 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/13/证书结构解析/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="dail sky">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="sky">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/11/13/证书结构解析/" itemprop="url">证书结构解析</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-13T20:48:22+08:00">
+                2018-11-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Certificate ::= SEQUENCE {</p>
+<pre><code>tbsCertificate       TBSCertificate, -- 证书主体
+
+signatureAlgorithm   AlgorithmIdentifier, -- 证书签名算法标识
+
+signatureValue       BIT STRING --证书签名值,是使用signatureAlgorithm部分指定的签名算法对tbsCertificate证书主题部分签名后的值.
+
+ }
+</code></pre><p>   TBSCertificate ::= SEQUENCE {</p>
+<pre><code>version         [0] EXPLICIT Version DEFAULT v1, -- 证书版本号
+
+serialNumber         CertificateSerialNumber, -- 证书序列号，对同一CA所颁发的证书，序列号唯一标识证书
+
+signature            AlgorithmIdentifier, --证书签名算法标识
+
+issuer               Name,                --证书发行者名称
+
+validity             Validity,            --证书有效期
+
+subject              Name,                --证书主体名称
+
+subjectPublicKeyInfo SubjectPublicKeyInfo,--证书公钥
+
+issuerUniqueID [1] IMPLICIT UniqueIdentifier OPTIONAL,
+
+                     -- 证书发行者ID(可选)，只在证书版本2、3中才有
+
+subjectUniqueID [2] IMPLICIT UniqueIdentifier OPTIONAL,
+
+                     -- 证书主体ID(可选)，只在证书版本2、3中才有
+
+extensions      [3] EXPLICIT Extensions OPTIONAL
+
+                     -- 证书扩展段（可选），只在证书版本3中才有
+
+}
+</code></pre><p>   Version ::= INTEGER { v1(0), v2(1), v3(2) }</p>
+<p>   CertificateSerialNumber ::= INTEGER</p>
+<p>   AlgorithmIdentifier ::= SEQUENCE {</p>
+<pre><code>algorithm               OBJECT IDENTIFIER,
+
+parameters              ANY DEFINED BY algorithm OPTIONAL }
+</code></pre><p>   parameters:</p>
+<p>   Dss-Parms ::= SEQUENCE { – parameters ，DSA(DSS)算法时的parameters,</p>
+<p>RSA算法没有此参数</p>
+<pre><code>p             INTEGER,
+
+q             INTEGER,
+
+g             INTEGER }
+</code></pre><p>signatureValue：</p>
+<p>Dss-Sig-Value ::= SEQUENCE { – sha1DSA签名算法时,签名值</p>
+<pre><code>r       INTEGER,
+
+s       INTEGER }
+</code></pre><p>   Name ::= CHOICE {</p>
+<pre><code>RDNSequence }
+</code></pre><p>   RDNSequence ::= SEQUENCE OF RelativeDistinguishedName</p>
+<p>   RelativeDistinguishedName ::=</p>
+<pre><code>SET OF AttributeTypeAndValue
+</code></pre><p>   AttributeTypeAndValue ::= SEQUENCE {</p>
+<pre><code>type     AttributeType,
+
+value    AttributeValue }
+</code></pre><p>   AttributeType ::= OBJECT IDENTIFIER</p>
+<p>   AttributeValue ::= ANY DEFINED BY AttributeType</p>
+<p>   Validity ::= SEQUENCE {</p>
+<pre><code>notBefore      Time,  -- 证书有效期起始时间
+
+notAfter       Time  -- 证书有效期终止时间
+
+}
+</code></pre><p>   Time ::= CHOICE {</p>
+<pre><code>utcTime        UTCTime,
+
+generalTime    GeneralizedTime }
+</code></pre><p>   UniqueIdentifier ::= BIT STRING</p>
+<p>   SubjectPublicKeyInfo ::= SEQUENCE {</p>
+<pre><code>algorithm            AlgorithmIdentifier, -- 公钥算法
+
+subjectPublicKey     BIT STRING            -- 公钥值
+
+}
+</code></pre><p>subjectPublicKey:</p>
+<p>RSAPublicKey ::= SEQUENCE { – RSA算法时的公钥值</p>
+<pre><code>modulus            INTEGER, -- n
+
+publicExponent     INTEGER -- e -- }
+</code></pre><p>   Extensions ::= SEQUENCE SIZE (1..MAX) OF Extension</p>
+<p>   Extension ::= SEQUENCE {</p>
+<pre><code>extnID      OBJECT IDENTIFIER,
+
+critical    BOOLEAN DEFAULT FALSE,
+
+extnValue   OCTET STRING }
+</code></pre><p>PKCS#10</p>
+<pre><code>CertificationRequestInfo ::= SEQUENCE {
+    version       INTEGER { v1(0) } (v1,...),
+    subject       Name,
+    subjectPKInfo SubjectPublicKeyInfo{{ PKInfoAlgorithms }},
+    attributes    [0] Attributes{{ CRIAttributes }}
+}
+
+SubjectPublicKeyInfo { ALGORITHM : IOSet} ::= SEQUENCE {
+    algorithm        AlgorithmIdentifier {{IOSet}},
+    subjectPublicKey BIT STRING
+}
+
+CertificationRequest ::= SEQUENCE {
+    certificationRequestInfo CertificationRequestInfo,
+    signatureAlgorithm AlgorithmIdentifier{{ SignatureAlgorithms }},
+    signature          BIT STRING
+} 
+</code></pre><p>PKCS#8 </p>
+<pre><code>PrivateKeyInfo ::= SEQUENCE {
+    version                   Version, 版本 缺省为0
+    privateKeyAlgorithm       PrivateKeyAlgorithmIdentifier, 私钥算法标识
+    privateKey                PrivateKey,  私钥明文
+    attributes           [0]  IMPLICIT Attributes OPTIONAL  和私钥一起被加密的属性集合
+}
+EncryptedPrivateKeyInfo ::= SEQUENCE {
+    encryptionAlgorithm  EncryptionAlgorithmIdentifier,
+    encryptedData        EncryptedData
+}
+</code></pre><p>PKCS#7– 数字签名</p>
+<pre><code>SignedData ::= SEQUENCE {    数字签名
+    version Version,      消息格式版本   缺省值为1
+    digestAlgorithms DigestAlgorithmIdentifiers,    摘要算法标识集合
+    contentInfo ContentInfo, 待签名内容
+    certificates  [0] IMPLICIT ExtendedCertificatesAndCertificates  OPTIONAL,  签名者认证路径中的相关证书
+    crls   [1] IMPLICIT CertificateRevocationLists OPTIONAL,   CRL集合
+    signerInfos SignerInfos    签名者信息集合（至少包含一个签名者）
+}
+SignerInfo ::= SEQUENCE {     签名者信息格式
+    version Version,   消息格式版本  缺省值为1
+    issuerAndSerialNumber IssuerAndSerialNumber,   用于唯一确定签名者证书，由证书签发者DN和证书序列号组成
+    digestAlgorithm DigestAlgorithmIdentifier,  摘要算法标识，得属于signeddata 中的digestAlgs
+    authenticatedAttributes [0] IMPLICIT Attributes OPTIONAL,标识签名者用于签名的属性集合
+    digestEncryptionAlgorithm  DigestEncryptionAlgorithmIdentifier, 用签名者私钥对摘要加密或对签名的公钥算法进行标识
+    encryptedDigest EncryptedDigest,私钥对摘要进行加密或签名后的值
+    unauthenticatedAttributes  [1] IMPLICIT Attributes OPTIONAL 表示签名者未用于签名的属性集合   
+}
+</code></pre><p> PKCS#7– 数字信封</p>
+<pre><code>EnvelopedData ::= SEQUENCE {   数字信封
+    version Version,  消息格式版本  缺省值0
+    recipientInfos RecipientInfos,    接收者集合至少含有一个接收者
+    encryptedContentInfo EncryptedContentInfo 已加密的内容信息
+}
+RecipientInfo ::= SEQUENCE {
+    version Version, 消息格式版本  缺省值为0
+    issuerAndSerialNumber IssuerAndSerialNumber,   用于唯一确定接收者证书，其证书签发者DN和证书序列号组成
+    keyEncryptionAlgorithm  KeyEncryptionAlgorithmIdentifier, 密码算法标识，用于加密密钥
+    encryptedKey EncryptedKey   被加密的密钥
+}
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/11/TLS握手协议/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -475,7 +748,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -488,7 +761,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
