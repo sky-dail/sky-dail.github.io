@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="证书结构以及常见扩展项用途#### 证书结构 Certificate ::= SEQUENCE { tbsCertificate       TBSCertificate, -- 证书主体  signatureAlgorithm   AlgorithmIdentifier, -- 证书签名算法标识  signatureValue       BIT STRING --证书签名值,是使用sign">
+<meta name="description" content="###证书结构以及常见扩展项用途 ####证书结构 Certificate ::= SEQUENCE { tbsCertificate       TBSCertificate, -- 证书主体  signatureAlgorithm   AlgorithmIdentifier, -- 证书签名算法标识  signatureValue       BIT STRING --证书签名值,是使用si">
 <meta name="keywords" content="Java 密码学">
 <meta property="og:type" content="article">
 <meta property="og:title" content="sky">
 <meta property="og:url" content="http://yoursite.com/2018/12/09/证书结构以及常见扩展项用途/index.html">
 <meta property="og:site_name" content="sky">
-<meta property="og:description" content="证书结构以及常见扩展项用途#### 证书结构 Certificate ::= SEQUENCE { tbsCertificate       TBSCertificate, -- 证书主体  signatureAlgorithm   AlgorithmIdentifier, -- 证书签名算法标识  signatureValue       BIT STRING --证书签名值,是使用sign">
+<meta property="og:description" content="###证书结构以及常见扩展项用途 ####证书结构 Certificate ::= SEQUENCE { tbsCertificate       TBSCertificate, -- 证书主体  signatureAlgorithm   AlgorithmIdentifier, -- 证书签名算法标识  signatureValue       BIT STRING --证书签名值,是使用si">
 <meta property="og:locale" content="zh_Hans">
-<meta property="og:updated_time" content="2018-12-09T03:12:59.214Z">
+<meta property="og:updated_time" content="2018-12-09T03:20:38.544Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="sky">
-<meta name="twitter:description" content="证书结构以及常见扩展项用途#### 证书结构 Certificate ::= SEQUENCE { tbsCertificate       TBSCertificate, -- 证书主体  signatureAlgorithm   AlgorithmIdentifier, -- 证书签名算法标识  signatureValue       BIT STRING --证书签名值,是使用sign">
+<meta name="twitter:description" content="###证书结构以及常见扩展项用途 ####证书结构 Certificate ::= SEQUENCE { tbsCertificate       TBSCertificate, -- 证书主体  signatureAlgorithm   AlgorithmIdentifier, -- 证书签名算法标识  signatureValue       BIT STRING --证书签名值,是使用si">
 
 
 
@@ -187,6 +187,16 @@
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
           </a>
         </li>
       
@@ -300,7 +310,8 @@
       
 
       
-        <h3 id="证书结构以及常见扩展项用途"><a href="#证书结构以及常见扩展项用途" class="headerlink" title="证书结构以及常见扩展项用途"></a>证书结构以及常见扩展项用途</h3><p>#### 证书结构</p>
+        <p>###证书结构以及常见扩展项用途</p>
+<p>####证书结构</p>
 <p>Certificate ::= SEQUENCE {</p>
 <pre><code>tbsCertificate       TBSCertificate, -- 证书主体
 
@@ -396,7 +407,8 @@ publicExponent     INTEGER -- e -- }
 critical    BOOLEAN DEFAULT FALSE,
 
 extnValue   OCTET STRING }
-</code></pre><h4 id="常见扩展项用途—RFC3280"><a href="#常见扩展项用途—RFC3280" class="headerlink" title="常见扩展项用途—RFC3280"></a>常见扩展项用途—RFC3280</h4><ul>
+</code></pre><p>####常见扩展项用途—RFC3280</p>
+<ul>
 <li>authorityKeyIdentifier（证书签发者密钥标识）<ul>
 <li>authorityKeyIdentifier扩展项用于区分证书签发者（CA）的公钥。当证书签发者拥有多个公私钥对用于签发用户证书时，必须使用该扩展项</li>
 <li>该扩展项必须设置为非关键项（critical=FALSE）</li>
@@ -618,17 +630,8 @@ aACompromise               (8),            --表示AA泄露
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -679,22 +682,6 @@ aACompromise               (8),            --表示AA泄露
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#证书结构以及常见扩展项用途"><span class="nav-number">1.</span> <span class="nav-text">证书结构以及常见扩展项用途</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#常见扩展项用途—RFC3280"><span class="nav-number">1.1.</span> <span class="nav-text">常见扩展项用途—RFC3280</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

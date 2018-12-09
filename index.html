@@ -191,6 +191,16 @@
         </li>
       
         
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
@@ -304,7 +314,8 @@
       
         
           
-            <h3 id="证书结构以及常见扩展项用途"><a href="#证书结构以及常见扩展项用途" class="headerlink" title="证书结构以及常见扩展项用途"></a>证书结构以及常见扩展项用途</h3><p>#### 证书结构</p>
+            <p>###证书结构以及常见扩展项用途</p>
+<p>####证书结构</p>
 <p>Certificate ::= SEQUENCE {</p>
 <pre><code>tbsCertificate       TBSCertificate, -- 证书主体
 
@@ -400,7 +411,8 @@ publicExponent     INTEGER -- e -- }
 critical    BOOLEAN DEFAULT FALSE,
 
 extnValue   OCTET STRING }
-</code></pre><h4 id="常见扩展项用途—RFC3280"><a href="#常见扩展项用途—RFC3280" class="headerlink" title="常见扩展项用途—RFC3280"></a>常见扩展项用途—RFC3280</h4><ul>
+</code></pre><p>####常见扩展项用途—RFC3280</p>
+<ul>
 <li>authorityKeyIdentifier（证书签发者密钥标识）<ul>
 <li>authorityKeyIdentifier扩展项用于区分证书签发者（CA）的公钥。当证书签发者拥有多个公私钥对用于签发用户证书时，必须使用该扩展项</li>
 <li>该扩展项必须设置为非关键项（critical=FALSE）</li>
