@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, Sky">
+  <meta name="keywords" content="PKI,">
 
 
 
@@ -79,17 +79,18 @@
 
 
 
-<meta name="description" content="一个平凡的java开发者，在自己喜欢的行业上一直努力">
-<meta name="keywords" content="Java 密码学">
-<meta property="og:type" content="website">
-<meta property="og:title" content="sky">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="证书结构以及常见扩展项用途#### 证书结构 Certificate ::= SEQUENCE { tbsCertificate       TBSCertificate, -- 证书主体  signatureAlgorithm   AlgorithmIdentifier, -- 证书签名算法标识  signatureValue       BIT STRING --证书签名值,是使用signa">
+<meta name="keywords" content="PKI">
+<meta property="og:type" content="article">
+<meta property="og:title" content="证书结构以及常见扩展项用途">
+<meta property="og:url" content="http://yoursite.com/2018/11/11/证书结构以及常见扩展项用途/index.html">
 <meta property="og:site_name" content="sky">
-<meta property="og:description" content="一个平凡的java开发者，在自己喜欢的行业上一直努力">
+<meta property="og:description" content="证书结构以及常见扩展项用途#### 证书结构 Certificate ::= SEQUENCE { tbsCertificate       TBSCertificate, -- 证书主体  signatureAlgorithm   AlgorithmIdentifier, -- 证书签名算法标识  signatureValue       BIT STRING --证书签名值,是使用signa">
 <meta property="og:locale" content="zh_Hans">
+<meta property="og:updated_time" content="2018-12-09T03:42:13.866Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="sky">
-<meta name="twitter:description" content="一个平凡的java开发者，在自己喜欢的行业上一直努力">
+<meta name="twitter:title" content="证书结构以及常见扩展项用途">
+<meta name="twitter:description" content="证书结构以及常见扩展项用途#### 证书结构 Certificate ::= SEQUENCE { tbsCertificate       TBSCertificate, -- 证书主体  signatureAlgorithm   AlgorithmIdentifier, -- 证书签名算法标识  signatureValue       BIT STRING --证书签名值,是使用signa">
 
 
 
@@ -119,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/">
+  <link rel="canonical" href="http://yoursite.com/2018/11/11/证书结构以及常见扩展项用途/">
 
 
 
 
 
-  <title>sky</title>
+  <title>证书结构以及常见扩展项用途 | sky</title>
   
 
 
@@ -144,8 +145,7 @@
     
   
 
-  <div class="container sidebar-position-right 
-  page-home">
+  <div class="container sidebar-position-right page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -228,218 +228,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/11/TLS握手协议/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="dail sky">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="sky">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/11/11/TLS握手协议/" itemprop="url">TLS握手协议</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-11T08:54:16+08:00">
-                2018-11-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li><p>第一阶段 ClientHello</p>
-<p><img src="/2018/11/11/TLS握手协议/ClientHello.png" alt="ClientHello"></p>
-<p><img src="/2018/11/11/TLS握手协议/ClientHello2.png" alt="ClientHello2"></p>
-<ul>
-<li>Version 客户端支持的最大版本号，当前为TLSv1.2</li>
-<li>Random 客户端生成的随机数（32字节其中前四字节为时间，后28字节为随机数）</li>
-<li>Session Id  会话id </li>
-<li>Cipher suite (客户端支持的加密套件)：共17个，组成（密钥交换，加密算法，Mac算法，prf伪随机函数）</li>
-<li>Compression Methods(压缩方法)：一般为null（0）</li>
-<li>Extension : 扩展项</li>
-</ul>
-</li>
-<li><p>第二阶段  ServerHello</p>
-<p><img src="/2018/11/11/TLS握手协议/ServerHello1.png" alt="ServerHello1"></p>
-<p><img src="/2018/11/11/TLS握手协议/ServerHello2.png" alt="ServerHello2"></p>
-<p><img src="/2018/11/11/TLS握手协议/ServerHello3.png" alt="ServerHello3"></p>
-<p><img src="/2018/11/11/TLS握手协议/ServerHello4.png" alt="ServerHello4"></p>
-<ul>
-<li><p>Server hello </p>
-<ul>
-<li>Version 确定版本号TLS1.2</li>
-<li>Random 服务端自生成的随机数（32字节 4+28）</li>
-<li>Session Id 用于以后会话恢复使用的</li>
-<li>Cipher suite 选用加密套件</li>
-<li>Compression Method 压缩算法（null）</li>
-<li>Extensions 扩展项</li>
-</ul>
-</li>
-<li><p>Certificate </p>
-<ul>
-<li>服务端的证书以及签发CA的证书。通过签发CA的证书信息，能够直接找到根证书 </li>
-</ul>
-</li>
-<li><p>Server Key Exchange</p>
-<ul>
-<li>如果密钥交换算法是DH算法，这里需要发送服务端使用的DH参数，RSA算法不需要这一步</li>
-</ul>
-</li>
-<li><p>Certificate Request(Optional)</p>
-<ul>
-<li>如果服务端想验证客户端证书的话，发出该请求，在Certificate_Verify客户端会发送证书给服务端</li>
-<li>客户端可以提供的证书类型</li>
-<li>服务端接收的证书distinguished name 列表，可以是root CA或者 subordinate CA。如果服务端配置了trust keystore,这里会列出所有的trust keystore 中的distinguished name</li>
-</ul>
-</li>
-<li><p>server hello done</p>
-<ul>
-<li>server hello 结束</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>第三步 Certificate_verify</p>
-<p><img src="/2018/11/11/TLS握手协议/cert_verify.png" alt="cert_verify"></p>
-<ul>
-<li>certificate_ verify <ul>
-<li>验证服务端证书的合法性，解析出服务端证书公钥</li>
-</ul>
-</li>
-<li>certificate<ul>
-<li>客户端证书（可选）仅在双向认证时有这步</li>
-</ul>
-</li>
-<li>client key exchange<ul>
-<li>客户端生成的第三个随机数。如果采用的是RSA算法，会生成一个48字节随机数，然后用server的公钥加密后再放入报文中；如果是DH算法，这里发送的就是客户端的DH算法，之后服务端和客户端根据DH算法，各自计算出相同的pre-master secret</li>
-</ul>
-</li>
-<li><p>change cipher spec </p>
-<ul>
-<li>客户端使用上面的随机数client random,server random, premaster secret 计算出48字节的master secret 这个就是对称加密算法的密钥</li>
-<li>发送change cipher spec 后告知服务端，客户端已经切换好加密套件，随时可以传输数据</li>
-</ul>
-</li>
-<li><p>finished</p>
-<ul>
-<li>客户端发送第一个加密报文，使用HMAC算法计算收到和发送的所有握手消息的摘要，然后通过RFC5246中定义的一个伪随机函数PRF计算出结果，加密后发送。</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>第四步server finish<br>和第三步操作大致相同</p>
-</li>
-<li>session的恢复<ul>
-<li>握手阶段用来建立SSL的连接。如果处于某种原因，对话中断，就需要重新握手。</li>
-<li>有两种方法可以恢复原来的session：一种叫做session ID，另一种叫做session ticket</li>
-<li>session ID的思想很简单，就是每一次对话就有一个编号。如果对话中断，下次重连的时候，只要客户端给出这个编号，且服务端有这个编号的记录，双方就可以重新使用已有的“对话密钥”，而不必重新生成一把。</li>
-</ul>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
 
   
 
@@ -469,9 +260,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/11/11/证书结构以及常见扩展项用途/" itemprop="url">证书结构以及常见扩展项用途</a></h1>
+          <h1 class="post-title" itemprop="name headline">证书结构以及常见扩展项用途</h1>
         
 
         <div class="post-meta">
@@ -521,9 +310,7 @@
       
 
       
-        
-          
-            <h3 id="证书结构以及常见扩展项用途"><a href="#证书结构以及常见扩展项用途" class="headerlink" title="证书结构以及常见扩展项用途"></a>证书结构以及常见扩展项用途</h3><p>#### 证书结构</p>
+        <h3 id="证书结构以及常见扩展项用途"><a href="#证书结构以及常见扩展项用途" class="headerlink" title="证书结构以及常见扩展项用途"></a>证书结构以及常见扩展项用途</h3><p>#### 证书结构</p>
 <p>Certificate ::= SEQUENCE {</p>
 <pre><code>tbsCertificate       TBSCertificate, -- 证书主体
 
@@ -758,8 +545,6 @@ aACompromise               (8),            --表示AA泄露
 </code></pre><p>   }</p>
 <p>其中，DistributionPoint类型不能只包含reasons字段，distributionPoint和cRLIssuer字段至少包含一个。如果证书签发者不是CRL签发者，则cRLIssuer字段必须存在，而且必须包含CRL签发者的DN名称。如果证书签发者也是CRL签发者，则cRLIssuer字段必须忽略，distributionPoint字段必须存在.<br>distributionPoint定义为DistributionPointName类型。如果distributionPoint包含多个名称值，则每个名称表示一种方法或机制，不同方法或机制能获取相同的CRL，如LDAP和HTTP。如果distributionPoint只包含单个值（nameRelativeToCRLIssuer），则表示DN项的一部分；只需将其附加到CRL签发者或证书签发者的X.500名称后即可获得CRL发布点名称；如果DistributionPoint中的cRLIssuer存在，则使用CRL签发者cRLIssuer，否则使用证书签发者。</p>
 
-          
-        
       
     </div>
     
@@ -774,14 +559,36 @@ aACompromise               (8),            --表示AA泄露
 
     <footer class="post-footer">
       
-
+        <div class="post-tags">
+          
+            <a href="/tags/PKI/" rel="tag"># PKI</a>
+          
+        </div>
       
 
       
+      
+      
 
       
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/11/TLS握手协议/" rel="prev" title="TLS握手协议">
+                TLS握手协议 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
       
-        <div class="post-eof"></div>
+
+      
       
     </footer>
   </div>
@@ -791,10 +598,11 @@ aACompromise               (8),            --表示AA泄露
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -802,6 +610,10 @@ aACompromise               (8),            --表示AA泄露
 
 
           
+
+  
+
+
 
         </div>
         
@@ -822,8 +634,17 @@ aACompromise               (8),            --表示AA泄露
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -874,6 +695,22 @@ aACompromise               (8),            --表示AA泄露
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#证书结构以及常见扩展项用途"><span class="nav-number">1.</span> <span class="nav-text">证书结构以及常见扩展项用途</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#常见扩展项用途—RFC3280"><span class="nav-number">1.1.</span> <span class="nav-text">常见扩展项用途—RFC3280</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -1014,6 +851,10 @@ aACompromise               (8),            --表示AA泄露
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
