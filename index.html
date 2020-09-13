@@ -243,6 +243,271 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/01/JVM类加载机制/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="dail sky">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="sky">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/09/01/JVM类加载机制/" itemprop="url">JVM类加载机制</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-09-01T23:01:47+08:00">
+                2020-09-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="java执行代码的流程"><a href="#java执行代码的流程" class="headerlink" title="java执行代码的流程"></a>java执行代码的流程</h3><ul>
+<li><p>流程图</p>
+<p><img src="/2020/09/01/JVM类加载机制/类加载机制.png" alt="java"><br>其中loadClass类加载过程分为如下几步:<br><img src="/2020/09/01/JVM类加载机制/loadClass过程.png" alt="java"></p>
+</li>
+<li><p>加载：将class文件中的二进制数据读入到内存中,在加载阶段会在内存中生成一个代表这个类的Class对象</p>
+</li>
+<li>验证: 检查字节码文件的准确性</li>
+<li>准备: 为类的静态变量分配内存，并赋予初始值</li>
+<li>解析:将二进制符号的引用变为直接引用（符号引用-》直接引用），动态链接</li>
+<li>初始化:对类的静态变量初始化为执行的值，执行静态代码块</li>
+</ul>
+<h3 id="类加载器"><a href="#类加载器" class="headerlink" title="类加载器"></a>类加载器</h3><p>负责将生成的.class文件加载到内存中，并生成对应的Class对象</p>
+<ul>
+<li>引导类加载器(BootStrapClassLoader): 负责加载jre的lib目录下的核心类库，如rt.jar等</li>
+<li>扩展类加载器(ExtensionClassLoader):负责加载jre的lib目录下ext文件夹下的包</li>
+<li>应用程序类加载器(AppClassLoader):负责加载ClassPath路径下的类包，主要是加载自己要写的那些类</li>
+<li>自定义类加载器:负责加载用户自定义路径下的类包</li>
+</ul>
+<h3 id="双亲委派机制"><a href="#双亲委派机制" class="headerlink" title="双亲委派机制"></a>双亲委派机制</h3><p>当一个类加载调用loadClass后，并不会直接加载，而是先交给当前类加载器的父加载器加载，知道最顶层的父加载器，只有当父加载器无法完成加载的时候，子加载器才会自己加载<br> <img src="/2020/09/01/JVM类加载机制/双亲委派机制.png" alt="java"></p>
+<h4 id="双亲委派机制的用处"><a href="#双亲委派机制的用处" class="headerlink" title="双亲委派机制的用处"></a>双亲委派机制的用处</h4><ul>
+<li>沙箱安全机制：自己写的java.lang.String类不会被加载，防止核心API库被随意篡改</li>
+<li>避免类的重复加载：当父类已经加载该类时，就没有必要子类加载器再加载一次，保证被加载类的唯一性</li>
+</ul>
+<h4 id="自定义类加载器"><a href="#自定义类加载器" class="headerlink" title="自定义类加载器"></a>自定义类加载器</h4><ul>
+<li>继承ClassLoader类</li>
+<li>重写findClass方法</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/09/springboot学习笔记/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="dail sky">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="sky">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/12/09/springboot学习笔记/" itemprop="url">springboot学习笔记</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-09T12:09:08+08:00">
+                2018-12-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/11/TLS握手协议/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -837,7 +1102,7 @@ aACompromise               (8),            --表示AA泄露
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -850,7 +1115,7 @@ aACompromise               (8),            --表示AA泄露
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
@@ -887,7 +1152,7 @@ aACompromise               (8),            --表示AA泄露
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

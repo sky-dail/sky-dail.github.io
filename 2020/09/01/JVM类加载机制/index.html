@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="TLS,PKI,">
+  <meta name="keywords" content="JVM,">
 
 
 
@@ -79,26 +79,22 @@
 
 
 
-<meta name="description" content="第一阶段 ClientHello    Version 客户端支持的最大版本号，当前为TLSv1.2 Random 客户端生成的随机数（32字节其中前四字节为时间，后28字节为随机数） Session Id  会话id  Cipher suite (客户端支持的加密套件)：共17个，组成（密钥交换，加密算法，Mac算法，prf伪随机函数） Compression Methods(压缩方法)：一般">
-<meta name="keywords" content="TLS,PKI">
+<meta name="description" content="java执行代码的流程 流程图 其中loadClass类加载过程分为如下几步:  加载：将class文件中的二进制数据读入到内存中,在加载阶段会在内存中生成一个代表这个类的Class对象  验证: 检查字节码文件的准确性 准备: 为类的静态变量分配内存，并赋予初始值 解析:将二进制符号的引用变为直接引用（符号引用-》直接引用），动态链接 初始化:对类的静态变量初始化为执行的值，执行静态代码块  类">
+<meta name="keywords" content="JVM">
 <meta property="og:type" content="article">
-<meta property="og:title" content="TLS握手协议">
-<meta property="og:url" content="http://yoursite.com/2018/11/11/TLS握手协议/index.html">
+<meta property="og:title" content="JVM类加载机制">
+<meta property="og:url" content="http://yoursite.com/2020/09/01/JVM类加载机制/index.html">
 <meta property="og:site_name" content="sky">
-<meta property="og:description" content="第一阶段 ClientHello    Version 客户端支持的最大版本号，当前为TLSv1.2 Random 客户端生成的随机数（32字节其中前四字节为时间，后28字节为随机数） Session Id  会话id  Cipher suite (客户端支持的加密套件)：共17个，组成（密钥交换，加密算法，Mac算法，prf伪随机函数） Compression Methods(压缩方法)：一般">
+<meta property="og:description" content="java执行代码的流程 流程图 其中loadClass类加载过程分为如下几步:  加载：将class文件中的二进制数据读入到内存中,在加载阶段会在内存中生成一个代表这个类的Class对象  验证: 检查字节码文件的准确性 准备: 为类的静态变量分配内存，并赋予初始值 解析:将二进制符号的引用变为直接引用（符号引用-》直接引用），动态链接 初始化:对类的静态变量初始化为执行的值，执行静态代码块  类">
 <meta property="og:locale" content="zh_Hans">
-<meta property="og:image" content="http://yoursite.com/2018/11/11/TLS握手协议/ClientHello.png">
-<meta property="og:image" content="http://yoursite.com/2018/11/11/TLS握手协议/ClientHello2.png">
-<meta property="og:image" content="http://yoursite.com/2018/11/11/TLS握手协议/ServerHello1.png">
-<meta property="og:image" content="http://yoursite.com/2018/11/11/TLS握手协议/ServerHello2.png">
-<meta property="og:image" content="http://yoursite.com/2018/11/11/TLS握手协议/ServerHello3.png">
-<meta property="og:image" content="http://yoursite.com/2018/11/11/TLS握手协议/ServerHello4.png">
-<meta property="og:image" content="http://yoursite.com/2018/11/11/TLS握手协议/cert_verify.png">
-<meta property="og:updated_time" content="2018-11-13T13:02:03.848Z">
+<meta property="og:image" content="http://yoursite.com/2020/09/01/JVM类加载机制/类加载机制.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/01/JVM类加载机制/loadClass过程.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/01/JVM类加载机制/双亲委派机制.png">
+<meta property="og:updated_time" content="2020-09-13T03:05:35.114Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="TLS握手协议">
-<meta name="twitter:description" content="第一阶段 ClientHello    Version 客户端支持的最大版本号，当前为TLSv1.2 Random 客户端生成的随机数（32字节其中前四字节为时间，后28字节为随机数） Session Id  会话id  Cipher suite (客户端支持的加密套件)：共17个，组成（密钥交换，加密算法，Mac算法，prf伪随机函数） Compression Methods(压缩方法)：一般">
-<meta name="twitter:image" content="http://yoursite.com/2018/11/11/TLS握手协议/ClientHello.png">
+<meta name="twitter:title" content="JVM类加载机制">
+<meta name="twitter:description" content="java执行代码的流程 流程图 其中loadClass类加载过程分为如下几步:  加载：将class文件中的二进制数据读入到内存中,在加载阶段会在内存中生成一个代表这个类的Class对象  验证: 检查字节码文件的准确性 准备: 为类的静态变量分配内存，并赋予初始值 解析:将二进制符号的引用变为直接引用（符号引用-》直接引用），动态链接 初始化:对类的静态变量初始化为执行的值，执行静态代码块  类">
+<meta name="twitter:image" content="http://yoursite.com/2020/09/01/JVM类加载机制/类加载机制.png">
 
 
 
@@ -128,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/11/11/TLS握手协议/">
+  <link rel="canonical" href="http://yoursite.com/2020/09/01/JVM类加载机制/">
 
 
 
 
 
-  <title>TLS握手协议 | sky</title>
+  <title>JVM类加载机制 | sky</title>
   
 
 
@@ -251,7 +247,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/11/TLS握手协议/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/01/JVM类加载机制/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="dail sky">
@@ -268,7 +264,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">TLS握手协议</h1>
+          <h1 class="post-title" itemprop="name headline">JVM类加载机制</h1>
         
 
         <div class="post-meta">
@@ -280,8 +276,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-11T08:54:16+08:00">
-                2018-11-11
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-09-01T23:01:47+08:00">
+                2020-09-01
               </time>
             
 
@@ -318,95 +314,32 @@
       
 
       
-        <ul>
-<li><p>第一阶段 ClientHello</p>
-<p><img src="/2018/11/11/TLS握手协议/ClientHello.png" alt="ClientHello"></p>
-<p><img src="/2018/11/11/TLS握手协议/ClientHello2.png" alt="ClientHello2"></p>
+        <h3 id="java执行代码的流程"><a href="#java执行代码的流程" class="headerlink" title="java执行代码的流程"></a>java执行代码的流程</h3><ul>
+<li><p>流程图</p>
+<p><img src="/2020/09/01/JVM类加载机制/类加载机制.png" alt="java"><br>其中loadClass类加载过程分为如下几步:<br><img src="/2020/09/01/JVM类加载机制/loadClass过程.png" alt="java"></p>
+</li>
+<li><p>加载：将class文件中的二进制数据读入到内存中,在加载阶段会在内存中生成一个代表这个类的Class对象</p>
+</li>
+<li>验证: 检查字节码文件的准确性</li>
+<li>准备: 为类的静态变量分配内存，并赋予初始值</li>
+<li>解析:将二进制符号的引用变为直接引用（符号引用-》直接引用），动态链接</li>
+<li>初始化:对类的静态变量初始化为执行的值，执行静态代码块</li>
+</ul>
+<h3 id="类加载器"><a href="#类加载器" class="headerlink" title="类加载器"></a>类加载器</h3><p>负责将生成的.class文件加载到内存中，并生成对应的Class对象</p>
 <ul>
-<li>Version 客户端支持的最大版本号，当前为TLSv1.2</li>
-<li>Random 客户端生成的随机数（32字节其中前四字节为时间，后28字节为随机数）</li>
-<li>Session Id  会话id </li>
-<li>Cipher suite (客户端支持的加密套件)：共17个，组成（密钥交换，加密算法，Mac算法，prf伪随机函数）</li>
-<li>Compression Methods(压缩方法)：一般为null（0）</li>
-<li>Extension : 扩展项</li>
+<li>引导类加载器(BootStrapClassLoader): 负责加载jre的lib目录下的核心类库，如rt.jar等</li>
+<li>扩展类加载器(ExtensionClassLoader):负责加载jre的lib目录下ext文件夹下的包</li>
+<li>应用程序类加载器(AppClassLoader):负责加载ClassPath路径下的类包，主要是加载自己要写的那些类</li>
+<li>自定义类加载器:负责加载用户自定义路径下的类包</li>
 </ul>
-</li>
-<li><p>第二阶段  ServerHello</p>
-<p><img src="/2018/11/11/TLS握手协议/ServerHello1.png" alt="ServerHello1"></p>
-<p><img src="/2018/11/11/TLS握手协议/ServerHello2.png" alt="ServerHello2"></p>
-<p><img src="/2018/11/11/TLS握手协议/ServerHello3.png" alt="ServerHello3"></p>
-<p><img src="/2018/11/11/TLS握手协议/ServerHello4.png" alt="ServerHello4"></p>
-<ul>
-<li><p>Server hello </p>
-<ul>
-<li>Version 确定版本号TLS1.2</li>
-<li>Random 服务端自生成的随机数（32字节 4+28）</li>
-<li>Session Id 用于以后会话恢复使用的</li>
-<li>Cipher suite 选用加密套件</li>
-<li>Compression Method 压缩算法（null）</li>
-<li>Extensions 扩展项</li>
+<h3 id="双亲委派机制"><a href="#双亲委派机制" class="headerlink" title="双亲委派机制"></a>双亲委派机制</h3><p>当一个类加载调用loadClass后，并不会直接加载，而是先交给当前类加载器的父加载器加载，知道最顶层的父加载器，只有当父加载器无法完成加载的时候，子加载器才会自己加载<br> <img src="/2020/09/01/JVM类加载机制/双亲委派机制.png" alt="java"></p>
+<h4 id="双亲委派机制的用处"><a href="#双亲委派机制的用处" class="headerlink" title="双亲委派机制的用处"></a>双亲委派机制的用处</h4><ul>
+<li>沙箱安全机制：自己写的java.lang.String类不会被加载，防止核心API库被随意篡改</li>
+<li>避免类的重复加载：当父类已经加载该类时，就没有必要子类加载器再加载一次，保证被加载类的唯一性</li>
 </ul>
-</li>
-<li><p>Certificate </p>
-<ul>
-<li>服务端的证书以及签发CA的证书。通过签发CA的证书信息，能够直接找到根证书 </li>
-</ul>
-</li>
-<li><p>Server Key Exchange</p>
-<ul>
-<li>如果密钥交换算法是DH算法，这里需要发送服务端使用的DH参数，RSA算法不需要这一步</li>
-</ul>
-</li>
-<li><p>Certificate Request(Optional)</p>
-<ul>
-<li>如果服务端想验证客户端证书的话，发出该请求，在Certificate_Verify客户端会发送证书给服务端</li>
-<li>客户端可以提供的证书类型</li>
-<li>服务端接收的证书distinguished name 列表，可以是root CA或者 subordinate CA。如果服务端配置了trust keystore,这里会列出所有的trust keystore 中的distinguished name</li>
-</ul>
-</li>
-<li><p>server hello done</p>
-<ul>
-<li>server hello 结束</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>第三步 Certificate_verify</p>
-<p><img src="/2018/11/11/TLS握手协议/cert_verify.png" alt="cert_verify"></p>
-<ul>
-<li>certificate_ verify <ul>
-<li>验证服务端证书的合法性，解析出服务端证书公钥</li>
-</ul>
-</li>
-<li>certificate<ul>
-<li>客户端证书（可选）仅在双向认证时有这步</li>
-</ul>
-</li>
-<li>client key exchange<ul>
-<li>客户端生成的第三个随机数。如果采用的是RSA算法，会生成一个48字节随机数，然后用server的公钥加密后再放入报文中；如果是DH算法，这里发送的就是客户端的DH算法，之后服务端和客户端根据DH算法，各自计算出相同的pre-master secret</li>
-</ul>
-</li>
-<li><p>change cipher spec </p>
-<ul>
-<li>客户端使用上面的随机数client random,server random, premaster secret 计算出48字节的master secret 这个就是对称加密算法的密钥</li>
-<li>发送change cipher spec 后告知服务端，客户端已经切换好加密套件，随时可以传输数据</li>
-</ul>
-</li>
-<li><p>finished</p>
-<ul>
-<li>客户端发送第一个加密报文，使用HMAC算法计算收到和发送的所有握手消息的摘要，然后通过RFC5246中定义的一个伪随机函数PRF计算出结果，加密后发送。</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>第四步server finish<br>和第三步操作大致相同</p>
-</li>
-<li>session的恢复<ul>
-<li>握手阶段用来建立SSL的连接。如果处于某种原因，对话中断，就需要重新握手。</li>
-<li>有两种方法可以恢复原来的session：一种叫做session ID，另一种叫做session ticket</li>
-<li>session ID的思想很简单，就是每一次对话就有一个编号。如果对话中断，下次重连的时候，只要客户端给出这个编号，且服务端有这个编号的记录，双方就可以重新使用已有的“对话密钥”，而不必重新生成一把。</li>
-</ul>
-</li>
+<h4 id="自定义类加载器"><a href="#自定义类加载器" class="headerlink" title="自定义类加载器"></a>自定义类加载器</h4><ul>
+<li>继承ClassLoader类</li>
+<li>重写findClass方法</li>
 </ul>
 
       
@@ -425,9 +358,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/TLS/" rel="tag"># TLS</a>
-          
-            <a href="/tags/PKI/" rel="tag"># PKI</a>
+            <a href="/tags/JVM/" rel="tag"># JVM</a>
           
         </div>
       
@@ -440,8 +371,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/11/11/证书结构以及常见扩展项用途/" rel="next" title="证书结构以及常见扩展项用途">
-                <i class="fa fa-chevron-left"></i> 证书结构以及常见扩展项用途
+              <a href="/2018/12/09/springboot学习笔记/" rel="next" title="springboot学习笔记">
+                <i class="fa fa-chevron-left"></i> springboot学习笔记
               </a>
             
           </div>
@@ -449,10 +380,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/12/09/springboot学习笔记/" rel="prev" title="springboot学习笔记">
-                springboot学习笔记 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -504,8 +431,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -556,6 +492,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#java执行代码的流程"><span class="nav-number">1.</span> <span class="nav-text">java执行代码的流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类加载器"><span class="nav-number">2.</span> <span class="nav-text">类加载器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#双亲委派机制"><span class="nav-number">3.</span> <span class="nav-text">双亲委派机制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#双亲委派机制的用处"><span class="nav-number">3.1.</span> <span class="nav-text">双亲委派机制的用处</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自定义类加载器"><span class="nav-number">3.2.</span> <span class="nav-text">自定义类加载器</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
