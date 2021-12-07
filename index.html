@@ -190,19 +190,39 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/12/07/hello-world/" target="_self">
-          Hello World
+        <a href="/2021/12/07/Arthas%E6%8A%80%E5%B7%A7/" target="_self">
+          Arthas技巧
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/12/07/hello-world/" target="_self">
+        <a href="/2021/12/07/Arthas%E6%8A%80%E5%B7%A7/" target="_self">
           
           
             
           
-          Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick
+          基础命令
+dashboard
+-i 实时数据的时间间隔，默认5000ms,
+-n 刷新实时数据的次数1dashboard -i 5000 -n 20
+
+
+
+
+thread 
+-n 指定最忙的前N个线程并打印堆栈
+-b 找出当前线程阻塞其他线程的线程
+
+
+
+123thread -n 3thread -bthread 51
+
+
+jvm(查看jvm参数)
+
+sysprop(当前jvm的系统属性)
+
+sy
         </a>
       </p>
 
@@ -210,7 +230,50 @@ Quick
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-12-07 10:28" pubdate>
+            <time datetime="2021-12-07 16:14" pubdate>
+              2021-12-07
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/jvm/">jvm</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/12/07/mysql%E7%B4%A2%E5%BC%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" target="_self">
+          mysql索引与数据结构
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/12/07/mysql%E7%B4%A2%E5%BC%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" target="_self">
+          
+          
+            
+          
+          
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-12-07 11:45" pubdate>
               2021-12-07
             </time>
           </div>
