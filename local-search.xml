@@ -4,19 +4,6 @@
   
   
   <entry>
-    <title></title>
-    <link href="/2021/12/11/%E5%85%AC%E5%8F%B8%E5%8A%A0%E5%AF%86%E9%82%AE%E4%BB%B6%E7%BB%93%E6%9E%84/"/>
-    <url>/2021/12/11/%E5%85%AC%E5%8F%B8%E5%8A%A0%E5%AF%86%E9%82%AE%E4%BB%B6%E7%BB%93%E6%9E%84/</url>
-    
-    <content type="html"><![CDATA[<h3 id="公司加密邮件结构"><a href="#公司加密邮件结构" class="headerlink" title="公司加密邮件结构"></a>公司加密邮件结构</h3><ul><li>公司加密邮件采用的是双层结构，外部是个pkcs7-envelopdata,内部是个pkcs7-signeddata</li></ul><p>PKCS#7– 数字信封</p><pre><code>EnvelopedData ::= SEQUENCE &#123;   数字信封    version Version,  消息格式版本  缺省值0    recipientInfos RecipientInfos,    接收者集合至少含有一个接收者    encryptedContentInfo EncryptedContentInfo 已加密的内容信息&#125;RecipientInfo ::= SEQUENCE &#123;    version Version, 消息格式版本  缺省值为0    issuerAndSerialNumber IssuerAndSerialNumber,   用于唯一确定接收者证书，其证书签发者DN和证书序列号组成    keyEncryptionAlgorithm  KeyEncryptionAlgorithmIdentifier, 密码算法标识，用于加密密钥    encryptedKey EncryptedKey   被加密的密钥&#125;</code></pre><p>PKCS#7– 数字签名</p><pre><code>SignedData ::= SEQUENCE &#123;    数字签名    version Version,      消息格式版本   缺省值为1    digestAlgorithms DigestAlgorithmIdentifiers,    摘要算法标识集合    contentInfo ContentInfo, 待签名内容    certificates  [0] IMPLICIT ExtendedCertificatesAndCertificates  OPTIONAL,  签名者认证路径中的相关证书    crls   [1] IMPLICIT CertificateRevocationLists OPTIONAL,   CRL集合    signerInfos SignerInfos    签名者信息集合（至少包含一个签名者）&#125;SignerInfo ::= SEQUENCE &#123;     签名者信息格式    version Version,   消息格式版本  缺省值为1    issuerAndSerialNumber IssuerAndSerialNumber,   用于唯一确定签名者证书，由证书签发者DN和证书序列号组成    digestAlgorithm DigestAlgorithmIdentifier,  摘要算法标识，得属于signeddata 中的digestAlgs    authenticatedAttributes [0] IMPLICIT Attributes OPTIONAL,标识签名者用于签名的属性集合    digestEncryptionAlgorithm  DigestEncryptionAlgorithmIdentifier, 用签名者私钥对摘要加密或对签名的公钥算法进行标识    encryptedDigest EncryptedDigest,私钥对摘要进行加密或签名后的值    unauthenticatedAttributes  [1] IMPLICIT Attributes OPTIONAL 表示签名者未用于签名的属性集合   &#125;</code></pre>]]></content>
-    
-    
-    
-  </entry>
-  
-  
-  
-  <entry>
     <title>explain学习笔记</title>
     <link href="/2021/12/11/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     <url>/2021/12/11/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
