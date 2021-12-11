@@ -41,7 +41,7 @@
 <meta property="og:image" content="http://example.com/.com//using_filesort_2.jpg">
 <meta property="og:image" content="http://example.com/.com//select_tables_optimized_away.jpg">
 <meta property="article:published_time" content="2021-12-11T02:44:15.000Z">
-<meta property="article:modified_time" content="2021-12-11T05:52:21.726Z">
+<meta property="article:modified_time" content="2021-12-11T05:57:39.114Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="mysql">
 <meta name="twitter:card" content="summary_large_image">
@@ -275,7 +275,7 @@
 <li>derived: 包含在from子句中的子查询。mysql会将结果存放到一个临时表中，也称为派生表（derived的英文含义）</li>
 </ul>
   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs mysql">mysql&gt; set session optimizer_switch=&#x27;derived_merge=off&#x27;; #关闭mysql5.7新特性对衍生表的合 并优化 <br>mysql&gt; explain select (select 1 from actor where id = 1) from (select * from film where id = 1) der;<br>mysql&gt; set session optimizer_switch=&#x27;derived_merge=on&#x27;; #还原默认配置<br></code></pre></td></tr></table></figure>
-<pre><code>![2](./select_type.jpg)
+<pre><code>![2](select_type.jpg)
 </code></pre>
 <ul>
 <li>union: 在union中的第二个和随后的select</li>
