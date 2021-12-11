@@ -34,6 +34,7 @@
 <meta property="og:image" content="http://example.com/2021/12/11/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/all.jpg">
 <meta property="og:image" content="http://example.com/2021/12/11/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/key_len.jpg">
 <meta property="og:image" content="http://example.com/2021/12/11/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/using_index.jpg">
+<meta property="og:image" content="http://example.com/2021/12/11/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/using_where.jpg">
 <meta property="og:image" content="http://example.com/2021/12/11/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/using_index_condition.jpg">
 <meta property="og:image" content="http://example.com/2021/12/11/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/using_temporary_1.jpg">
 <meta property="og:image" content="http://example.com/2021/12/11/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/using_temporary_2.jpg">
@@ -41,7 +42,7 @@
 <meta property="og:image" content="http://example.com/2021/12/11/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/using_filesort_2.jpg">
 <meta property="og:image" content="http://example.com/2021/12/11/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/select_tables_optimized_away.jpg">
 <meta property="article:published_time" content="2021-12-11T02:44:15.000Z">
-<meta property="article:modified_time" content="2021-12-11T06:00:03.852Z">
+<meta property="article:modified_time" content="2021-12-11T06:04:20.097Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="mysql">
 <meta name="twitter:card" content="summary_large_image">
@@ -214,7 +215,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      5.6k 字
+      5.5k 字
     </span>
   
 
@@ -413,7 +414,9 @@
 <li><p>Using where: 使用where 语句来处理结果，并且查询的列未被索引覆盖</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">mysql&gt; explain select * from actor where name = &#x27;a&#x27;;<br></code></pre></td></tr></table></figure>
 
-<p>![](using where.jpg)</p>
+
+
+<p><img src="/2021/12/11/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/using_where.jpg" srcset="/img/loading.gif" lazyload></p>
 </li>
 <li><p>Using index condition: 查询的列不完全被索引覆盖，where条件中是一个前导列的范围</p>
 <figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs n1ql">mysql&gt; <span class="hljs-keyword">explain</span> <span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> film_actor <span class="hljs-keyword">where</span> film_id &gt; <span class="hljs-number">1</span>;<br></code></pre></td></tr></table></figure>
