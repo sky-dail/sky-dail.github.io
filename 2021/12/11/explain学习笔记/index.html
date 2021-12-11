@@ -1,0 +1,656 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  <meta name="description" content="explain 执行计划各列解析1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768-- ------------------------------ Table structure for act">
+<meta property="og:type" content="article">
+<meta property="og:title" content="explain学习笔记">
+<meta property="og:url" content="http://example.com/2021/12/11/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="explain 执行计划各列解析1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768-- ------------------------------ Table structure for act">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2021/12/11/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/simple_select.jpg">
+<meta property="og:image" content="http://example.com/2021/12/11/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/const_system.jpg">
+<meta property="og:image" content="http://example.com/2021/12/11/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/const_system_show_warnings.jpg">
+<meta property="og:image" content="http://example.com/2021/12/11/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/eq_ref.jpg">
+<meta property="og:image" content="http://example.com/2021/12/11/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/ref_1.jpg">
+<meta property="og:image" content="http://example.com/2021/12/11/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/ref_2.jpg">
+<meta property="og:image" content="http://example.com/2021/12/11/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/range.jpg">
+<meta property="og:image" content="http://example.com/2021/12/11/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.jpg">
+<meta property="og:image" content="http://example.com/2021/12/11/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/all.jpg">
+<meta property="og:image" content="http://example.com/2021/12/11/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/key_len.jpg">
+<meta property="og:image" content="http://example.com/2021/12/11/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/using_index.jpg">
+<meta property="og:image" content="http://example.com/2021/12/11/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/using_index_condition.jpg">
+<meta property="og:image" content="http://example.com/2021/12/11/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/using_temporary_1.jpg">
+<meta property="og:image" content="http://example.com/2021/12/11/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/using_temporary_2.jpg">
+<meta property="og:image" content="http://example.com/2021/12/11/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/using_filesort_1.jpg">
+<meta property="og:image" content="http://example.com/2021/12/11/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/using_filesort_2.jpg">
+<meta property="og:image" content="http://example.com/2021/12/11/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/select_tables_optimized_away.jpg">
+<meta property="article:published_time" content="2021-12-11T02:44:15.000Z">
+<meta property="article:modified_time" content="2021-12-11T05:38:05.574Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="mysql">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2021/12/11/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/simple_select.jpg">
+  
+  <title>explain学习笔记 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.12","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname"}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="explain学习笔记">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-12-11 10:44" pubdate>
+        2021年12月11日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      5.6k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      17 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">explain学习笔记</h1>
+            
+            <div class="markdown-body">
+              <h3 id="explain-执行计划各列解析"><a href="#explain-执行计划各列解析" class="headerlink" title="explain 执行计划各列解析"></a>explain 执行计划各列解析</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><code class="hljs mysql">-- ----------------------------<br>-- Table structure for actor<br>-- ----------------------------<br>DROP TABLE IF EXISTS `actor`;<br>CREATE TABLE `actor` (<br>  `id` int NOT NULL,<br>  `name` varchar(45) DEFAULT NULL,<br>  `update_time` datetime DEFAULT NULL,<br>  PRIMARY KEY (`id`)<br>) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;<br><br>-- ----------------------------<br>-- Records of actor<br>-- ----------------------------<br>BEGIN;<br>INSERT INTO `actor` VALUES (1, &#x27;a&#x27;, &#x27;2021-12-08 16:32:09&#x27;);<br>INSERT INTO `actor` VALUES (2, &#x27;b&#x27;, &#x27;2021-12-08 16:32:12&#x27;);<br>INSERT INTO `actor` VALUES (3, &#x27;c&#x27;, &#x27;2021-12-08 16:32:15&#x27;);<br>COMMIT;<br><br>SET FOREIGN_KEY_CHECKS = 1;<br><br>-- ----------------------------<br>-- Table structure for film<br>-- ----------------------------<br>DROP TABLE IF EXISTS `film`;<br>CREATE TABLE `film` (<br>  `id` int NOT NULL AUTO_INCREMENT,<br>  `name` varchar(10) DEFAULT NULL,<br>  PRIMARY KEY (`id`),<br>  KEY `idx_name` (`name`)<br>) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;<br><br>-- ----------------------------<br>-- Records of film<br>-- ----------------------------<br>BEGIN;<br>INSERT INTO `film` VALUES (3, &#x27;film0&#x27;);<br>INSERT INTO `film` VALUES (1, &#x27;film1&#x27;);<br>INSERT INTO `film` VALUES (2, &#x27;film2&#x27;);<br>COMMIT;<br><br>SET FOREIGN_KEY_CHECKS = 1;<br><br>-- ----------------------------<br>-- Table structure for film_actor<br>-- ----------------------------<br>DROP TABLE IF EXISTS `film_actor`;<br>CREATE TABLE `film_actor` (<br>  `id` int NOT NULL,<br>  `film_id` int NOT NULL,<br>  `actor_id` int NOT NULL,<br>  `remark` varchar(255) DEFAULT NULL,<br>  PRIMARY KEY (`id`),<br>  KEY `idx_film_actor_id` (`film_id`,`actor_id`)<br>) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;<br><br>-- ----------------------------<br>-- Records of film_actor<br>-- ----------------------------<br>BEGIN;<br>INSERT INTO `film_actor` VALUES (1, 1, 1, NULL);<br>INSERT INTO `film_actor` VALUES (2, 1, 2, NULL);<br>INSERT INTO `film_actor` VALUES (3, 2, 1, NULL);<br>COMMIT;<br><br>SET FOREIGN_KEY_CHECKS = 1;<br><br></code></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><p>id列</p>
+<ul>
+<li>id列的编号是select的序列号，有几个select就有几个id,并且id的顺序是按select出现的顺序增长的</li>
+<li>id列越大执行优先级越高，id相同则从上往下执行，id为NULL最后执行</li>
+</ul>
+</li>
+<li><p>select_type列</p>
+<ul>
+<li>select_type表示对应行是简单还是复杂的查询<ul>
+<li>simple: 简单查询。查询不包含子查询和union<img src="explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/simple_select.jpg" srcset="/img/loading.gif" lazyload></li>
+<li>primary: 复杂查询中最外层的select</li>
+<li>subquery：包含在select中的子查询(不在from子句中)</li>
+<li>derived: 包含在from子句中的子查询。mysql会将结果存放到一个临时表中，也称为派生表（derived的英文含义）</li>
+</ul>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs mysql">mysql&gt; set session optimizer_switch=&#x27;derived_merge=off&#x27;; #关闭mysql5.7新特性对衍生表的合 并优化 <br>mysql&gt; explain select (select 1 from actor where id = 1) from (select * from film where id = 1) der;<br>mysql&gt; set session optimizer_switch=&#x27;derived_merge=on&#x27;; #还原默认配置<br></code></pre></td></tr></table></figure>
+<pre><code>![derived](explain学习笔记/select_type.jpg)
+</code></pre>
+<ul>
+<li>union: 在union中的第二个和随后的select</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>table 列</p>
+<ul>
+<li><p>表示关联类型或访问类型，即mysql决定如何查找表中的行，查找数据行记录的大概范围</p>
+</li>
+<li><p>依次从最优到最差分别为：system&gt;const&gt;eq_ref&gt;ref&gt;range&gt;index&gt;ALL</p>
+</li>
+<li><p>一般来说保证查询达到range级别，最好达到ref</p>
+<ul>
+<li><p>NULL：mysql能够在优化阶段分解查询语句，在执行阶段用不着再访问表或者索引，例如在索引中选取最小值，可以单独查找索引来完成，不需要在执行时访问表</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">mysql&gt; explain select min(id) from file;<br></code></pre></td></tr></table></figure></li>
+<li><p>const、system: mysql能对查询的某部分进行优化并将其转化为一个常量（可以用show warnings查看结果）用于primary key 或unique key的所有列与常数比较时，所以表最多有一个匹配行，读取一次，速度较快，system是const的特例，表里只有一条元组匹配时为system</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs mysql">mysql&gt; explain extended select * from (select * from film where id = 1) tmp;<br>mysql&gt; show warnings;<br></code></pre></td></tr></table></figure>
+
+<p> <img src="explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/const_system.jpg" srcset="/img/loading.gif" lazyload></p>
+<p> <img src="explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/const_system_show_warnings.jpg" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>eq_ref: primary key或unique key索引的所有部分被连接使用，最多只能返回一条符合条件的记录。这可能是在const之外最好的链接类型了，简单的select查询不会出现这种type.</p>
+ <figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs n1ql">mysql&gt; <span class="hljs-keyword">explain</span> <span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> film_actor <span class="hljs-keyword">left</span> <span class="hljs-keyword">join</span> film <span class="hljs-keyword">on</span> film_actor.film_id = film.id;<br></code></pre></td></tr></table></figure>
+
+<p> <img src="explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/eq_ref.jpg" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>ref: 相比eq_ref,不使用唯一索引，而是使用普通索引或者唯一性索引的部分前缀，索引要和某个值相比较，可能会找到多个符合的行</p>
+<ul>
+<li><p>简单select 查询，name是普通索引（非唯一索引）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">mysql&gt; explain select * from film where name = &#x27;film1&#x27;;<br></code></pre></td></tr></table></figure>
+
+<p><img src="explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/ref_1.jpg" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>关联表查询，idx_film_actor_id是film_id和actor_id的联合索引，这里使用到了左边前缀部分</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">mysql&gt; explain select film_id from film left join film_actor on film.id = film_actor.film_id;<br></code></pre></td></tr></table></figure>
+
+<p><img src="explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/ref_2.jpg" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ul>
+</li>
+<li><p>range: 范围扫描通常出现在in(),between,&gt;,&lt;,&gt;=等操作中，使用一个索引来检索给定范围的行</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">mysql&gt; explain select * from actor where id &gt; 1;<br></code></pre></td></tr></table></figure>
+
+<p> <img src="explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/range.jpg" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>index：扫描全索引就能拿到结果，一般是扫描某个二级索引，这种索引一般不会从索引数根节点开始快速查找，而是直接对二级索引的叶子节点遍历和扫描，速度还是比较慢的，这种查询一般为覆盖索引，二级索引一般比较小，所以这种通常比ALL快一些</p>
+ <figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs n1ql">mysql&gt; <span class="hljs-keyword">explain</span> <span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> film;<br></code></pre></td></tr></table></figure>
+
+<p> <img src="explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.jpg" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>ALL: 即全表扫描，扫描你的聚簇索引的所有叶子结点。通常情况下这需要增加索引来优化了。</p>
+ <figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs n1ql">mysql&gt; <span class="hljs-keyword">explain</span> <span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> actor;<br></code></pre></td></tr></table></figure>
+
+<p> <img src="explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/all.jpg" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>possible_keys</p>
+<ul>
+<li>这一列显示查询可能使用哪些索引来查找</li>
+<li>explain时可能出现possible_keys有列，而key显示NULL的情况，这种情况是因为表中的数据不多，mysql认为索引对此帮助不大，选择了全表扫描</li>
+<li>如果该列为NULL，则没有相关索引，在这种情况下，可以通过检查where子句看是否可以创造一个适当的索引来提高性能</li>
+</ul>
+</li>
+<li><p>key 列</p>
+<ul>
+<li>这一列显示mysql实际采用哪个索引来优化对该表的访问</li>
+<li>如果没有使用，则为NULL。如果想强制mysql使用或者忽视possible_keys列中的索引，在查询中使用force index、ignore index.</li>
+</ul>
+</li>
+<li><p>key_len列</p>
+<ul>
+<li><p>显示mysql在索引里使用的字节数，通过这个值可以算出具体使用了索引的哪些列</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">mysql&gt; explain select * from film_actor where film_id = 2;<br></code></pre></td></tr></table></figure>
+
+<p><img src="explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/key_len.jpg" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>计算规则如下</p>
+<ul>
+<li>字符串：char(n)和varchar(n),5.0.3版本后，n代表字符数，而不是字节数，如果是utf-8，一个数字或一个字母占1个字节，一个汉字占3个字节<ul>
+<li>char(n)：如果存汉字长度就是3n字节</li>
+<li>varchar(n)：如果存汉字则长度就是3n+2字节，加的2字节用来存储字符串长度，因为varchar是变长字符串</li>
+</ul>
+</li>
+<li>数值类型<ul>
+<li>tinyint: 1字节</li>
+<li>smallint: 2字节</li>
+<li>int: 4字节</li>
+<li>bigint: 8字节</li>
+</ul>
+</li>
+<li>时间类型<ul>
+<li>date: 3字节</li>
+<li>timestamp: 4字节</li>
+<li>datetime: 8字节</li>
+</ul>
+</li>
+<li>如果字段允许为NULL，需要一字节记录是否为NULL</li>
+<li>索引最大长度是768字节，当字符串长度过长时，mysql会做一个类似左前缀索引的处理，将前半部分的字符提取出来做索引。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>ref列</p>
+</li>
+</ul>
+<ul>
+<li>这一列显示了在key列记录的索引中，表查找值所用到的列或常量，常见的有：const(常量),字段名（film.id）</li>
+</ul>
+<ul>
+<li><p>rows列</p>
+<ul>
+<li>这一列是mysql估计要读取并检测的行数，注意这个不是结果集里的行数</li>
+</ul>
+</li>
+<li><p>extra列</p>
+<ul>
+<li><p>Using index: 使用覆盖索引</p>
+<ul>
+<li><p>覆盖索引定义：mysql执行计划explain结果里的key有使用索引，如果select后面查询的字段都可以从这个索引的树中获取，这种情况一般可以说是用到了覆盖索引，extra里一般都有using index；</p>
+</li>
+<li><p>覆盖索引一般针对的是辅助索引，整个查询结果只通过辅助索引就能拿到结果，不需要通过辅助索引树找到主键，再通过主键去主键索引树获取其它字段值</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">mysql&gt; explain select film_id from film_actor where film_id = 1;<br></code></pre></td></tr></table></figure>
+
+<p><img src="explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/using_index.jpg" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ul>
+</li>
+<li><p>Using where: 使用where 语句来处理结果，并且查询的列未被索引覆盖</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">mysql&gt; explain select * from actor where name = &#x27;a&#x27;;<br></code></pre></td></tr></table></figure>
+
+<p>![](explain学习笔记/using where.jpg)</p>
+</li>
+<li><p>Using index condition: 查询的列不完全被索引覆盖，where条件中是一个前导列的范围</p>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs n1ql">mysql&gt; <span class="hljs-keyword">explain</span> <span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> film_actor <span class="hljs-keyword">where</span> film_id &gt; <span class="hljs-number">1</span>;<br></code></pre></td></tr></table></figure>
+
+<p><img src="explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/using_index_condition.jpg" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>Using temporary: mysql需要创建一张临时表来处理查询。出现这种情况一般是要进行优化，首先是想到索引来优化</p>
+<ul>
+<li><p>actor.name没有索引，此时创建了张临时表来distinct</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">mysql&gt; explain select distinct name from actor;<br></code></pre></td></tr></table></figure>
+
+<p><img src="explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/using_temporary_1.jpg" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>film.name建立了idx_name索引，此时查询时extra是using index，没有用临时表</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">mysql&gt; explain select distinct name from film;<br></code></pre></td></tr></table></figure>
+
+<p><img src="explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/using_temporary_2.jpg" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ul>
+</li>
+<li><p>Using filesort: 将用外部排序而不是索引排序，数据较小时从内存排序，否则需要在磁盘完成排序。这种情况一般也是要用索引来优化</p>
+<ul>
+<li><p>actor.name未创建索引，会浏览actor整个表，保存排序关键字name和对应的id,然后排序name并检索记录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">mysql&gt; explain select * from actor order by name;<br></code></pre></td></tr></table></figure>
+
+<p><img src="explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/using_filesort_1.jpg" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>film.name建立了idx_name索引，此时查询时extra是using index</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">mysql&gt; explain select * from film order by name;<br></code></pre></td></tr></table></figure>
+
+<p><img src="explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/using_filesort_2.jpg" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ul>
+</li>
+<li><p>Select tables optimized away：使用某些聚合函数（比如max,min）来访问存在索引的某个字段时</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">mysql&gt; explain select min(id) from film;<br></code></pre></td></tr></table></figure>
+
+<p><img src="explain%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/select_tables_optimized_away.jpg" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ul>
+</li>
+</ul>
+<p>​             </p>
+<p>​    </p>
+<p>​    </p>
+<p>​    </p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/mysql/">mysql</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/12/07/Arthas%E6%8A%80%E5%B7%A7/">
+                        <span class="hidden-mobile">Arthas技巧</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
